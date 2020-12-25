@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from marathon import views
+from marathon.views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.first_page,name = "first_page"),
+    path('',first_page,name = "first_page"),
+    path('login/', auth_views.LoginView.as_view(template_name='login/index.html'),name = "m-login"),
+    path('register/', auth_views.LoginView.as_view(template_name='register/index.html'),name = "m-register")
 ]
