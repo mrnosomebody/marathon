@@ -19,9 +19,11 @@ from django.urls import path
 from marathon.views import *
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',first_page,name = "first_page"),
     path('login/', auth_views.LoginView.as_view(template_name='login/index.html'),name = "m-login"),
-    path('register/', auth_views.LoginView.as_view(template_name='register/index.html'),name = "m-register")
+    path('registeruser/', register_user,name = "m-register-user"),
+    path('registersponsor/', register_sponsor,name = "m-register-sponsor"),
 ]

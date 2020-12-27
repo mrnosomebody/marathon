@@ -13,6 +13,7 @@ class Event(models.Model):
     distance_id = models.ForeignKey(Distance, on_delete=models.PROTECT)
 
 class Sponsor(models.Model):
+    username = models.CharField(max_length=50)
     company = models.CharField(max_length=100 )
     phone_num = models.CharField(max_length=12)
     e_mail = models.CharField(max_length=50)
