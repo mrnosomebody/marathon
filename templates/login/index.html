@@ -1,3 +1,4 @@
+{% block content %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -61,13 +62,13 @@
 {#					</div>#}
 
 					<div class="container-login100-form-btn" style="margin-top: 27px">
-						<button class="login100-form-btn"  type="submit" onclick="">
+						<button class="login100-form-btn"  type="submit" onclick="" href="{% url 'm-profile' %}">
 							Login
 						</button>
 					</div>
 
 					<div class="text-center p-t-90" style="margin-top: -50px">
-						<a class="txt1" href="#">
+						<a class="txt1" href="{% url "password_reset" %}">
 							Forgot Password?
 						</a>
                         <br>
@@ -103,3 +104,4 @@
 
 </body>
 </html>
+{% endblock content %}

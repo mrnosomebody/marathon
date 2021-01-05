@@ -4,13 +4,13 @@ from django.forms import ModelForm
 
 from marathon.models import *
 
-STATUS_CHOICES = [(1, 'Runner'), (2, 'Coordinator'), (3, 'Organizer')]
-SEX_CHOICES = [(1, 'Male'), (2, 'Female')]
+STATUS_CHOICES = [(1, 'Runner'), (2, 'Organizer'), (3, 'Coordinator')]
+SEX_CHOICES = [("Male", 'Male'), ("Female", 'Female')]
 
 
 class Register_user(UserCreationForm):
-    status_id = forms.ChoiceField(widget=forms.Select, choices=STATUS_CHOICES)
-    sex = forms.ChoiceField(widget=forms.Select, choices=SEX_CHOICES)
+    status_id = forms.ChoiceField(widget=forms.Select, choices=STATUS_CHOICES, required=True)
+    sex = forms.ChoiceField(widget=forms.Select, choices=SEX_CHOICES, required=True)
 
     class Meta:
         model = Person
@@ -32,8 +32,3 @@ class Register_sponsor(ModelForm):
     class Meta:
         model = Sponsor
         fields = ["username", "e_mail", "password", "company", "phone_num"]
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)

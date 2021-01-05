@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import FormView
 
@@ -18,6 +17,7 @@ def register_user(request):
         form = Register_user(request.POST)
         if form.is_valid():
             form.save()
+            form._save_m2m()
             return redirect('first_page')
         else:
             messages.error(request, f'Error')
@@ -43,10 +43,12 @@ def register_sponsor(request):
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
-    success_url = '/admin'
+    success_url = '/profile'
     template_name = 'login/index.html'
 
     def form_valid(self, form):
         self.user = form.get_user()
         login(self.request,self.user)
         return super(LoginFormView,self).form_valid(form)
+
+
