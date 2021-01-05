@@ -8,4 +8,5 @@ urlpatterns = [
     path('password-reset/confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('profile/', profile, name = 'm-profile'),
+    path('sponsor-profile/', sponsor_profile, name = 'm-sponsor-profile'),
 ]

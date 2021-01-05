@@ -26,9 +26,8 @@ class Register_user(UserCreationForm):
         raise forms.ValidationError("Пользователь с таким email уже существует. Пожалуйста укажите другой email")
 
 
-class Register_sponsor(ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
+class Register_sponsor(UserCreationForm):
 
     class Meta:
         model = Sponsor
-        fields = ["username", "e_mail", "password", "company", "phone_num"]
+        fields = ["username", "e_mail", "company", "phone_num"]

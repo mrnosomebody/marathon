@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils import timezone
 
 
@@ -12,8 +13,13 @@ class Event(models.Model):
     place = models.CharField(max_length=255)
     distance_id = models.ForeignKey(Distance, on_delete=models.PROTECT)
 
-class Sponsor(models.Model):
-    username = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("m-event_detail", kwargs={'pk': self.pk})
+
+class Sponsor(User):
     company = models.CharField(max_length=100 )
     phone_num = models.CharField(max_length=12)
     e_mail = models.CharField(max_length=50)
@@ -31,7 +37,7 @@ class Person(User):
 class Run(models.Model):
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     person_id = models.ForeignKey(Person, on_delete=models.PROTECT)
-    time = models.TimeField()
-    took_place = models.IntegerField()
+    time = models.IntegerField(default=0)
+    took_place = models.IntegerField(default=0)
 
 
