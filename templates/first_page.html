@@ -43,9 +43,15 @@
     <a href="{% url 'm-event' %}"
        class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-1">Show
         all runs</a>
+    {% if user.is_authenticated %}
+    <a href="{% url 'm-logout' %}"
+       class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
+        Out</a>
+    {%else %}
     <a href="{% url 'm-login' %}"
        class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
         in</a>
+    {% endif %}
     <a href="{% url 'm-login' %}"
        class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2"
        style="margin-right: 300px">Profile</a>

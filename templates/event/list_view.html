@@ -18,7 +18,7 @@
                     <h2><a class="mr-2" href="{% url 'm-event_detail' event.id %}"> {{ event.name }}</a></h2>
                     <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
                     <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
-                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance - {{ event.distance_id.distance }} km</li>
+                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance - {{ event.distance.distance }} km</li>
                 </ul>
             </div>
                 <h2><a class="article-title" href="{% url 'm-event_detail' event.id %}">{{ event.title }}</a></h2>

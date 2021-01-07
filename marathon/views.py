@@ -25,12 +25,15 @@ def race_creator(request):
 @login_required(login_url=reverse_lazy('m-login'))
 def register_run(request, *args, **kwargs):
     user = Person.objects.get(pk=request.user.id)
+    event = Event.objects.get(pk=request.POST['event'])
     try:
-        if Run.objects.get(person_id=user.id):
+        a=Run.objects.get(person_id=user.id, event_id=event.id)
+
+        print(a)
+        if Run.objects.get(person_id=user.id, event_id=event.id) :
             messages.error(request, message='You have already joined')
             trc = True
     except:
-        event = Event.objects.get(pk=request.POST['event'])
         run = Run(person=user, event=event)
         run.save()
     return HttpResponse()

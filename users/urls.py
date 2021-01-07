@@ -9,4 +9,5 @@ urlpatterns = [
     path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path('profile/', profile, name = 'm-profile'),
     path('sponsor-profile/', sponsor_profile, name = 'm-sponsor-profile'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='first_page.html'), name='m-logout'),
 ]
