@@ -11,7 +11,7 @@ class Event(models.Model):
     name = models.CharField(max_length=40)
     date = models.DateTimeField(default=timezone.now)
     place = models.CharField(max_length=255)
-    distance_id = models.ForeignKey(Distance, on_delete=models.PROTECT)
+    distance = models.ForeignKey(Distance, on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
@@ -35,8 +35,8 @@ class Person(User):
     status_id = models.ManyToManyField(Status)
 
 class Run(models.Model):
-    event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
-    person_id = models.ForeignKey(Person, on_delete=models.PROTECT)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    person = models.ForeignKey(Person, on_delete=models.PROTECT)
     time = models.IntegerField(default=0)
     took_place = models.IntegerField(default=0)
 

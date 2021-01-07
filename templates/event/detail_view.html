@@ -2,7 +2,7 @@
 <html lang=ru>
 <head>
     <meta charset=utf-8>
-    <title>Serejina hernya</title>
+    <title>Race</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript">
         function getCookie(name) {
@@ -25,12 +25,12 @@
 
         function sendUltraPost(id) {
             $.ajax({ // create an AJAX call...
-                data: { event_id: id },
+                data: {event: id},
                 type: 'POST',
                 headers: {'X-CSRFToken': csrftoken},
                 url: '/join/',
                 success: function (response) {
-                    $('#join').replaceWith("<span>Вы успешно зарегистрированы!</span>");
+                    $('#join').replaceWith();
                 }
             });
         };
@@ -40,17 +40,33 @@
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-            <h2 class="article-title">{{ object.name }} MARATHON</h2>
+            <h2 class="article-title">{{ object.name }} Race</h2>
+            <div class="center">
+                <ul>
+                    <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
+                    <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
+                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance
+                        - {{ event.distance.distance }} km
+                    </li>
+                </ul>
+            </div>
             <div>
-                <a>
-                    Organization - {{ object.name }}
-                    Place - {{ object.place }}
-                    Date - {{ object.date }}
-                    Distance - {{ object.distance_id.distance }}
+
+                <table>
+                    <tr>
+                        <th>Full name</th>
+                        <th>Run time</th>
+                        <th>Place</th>
+                    </tr>
                     {% for run in object.run_set.all %}
-                        <div>дебич с никнеймом {{ run.person_id.username }} зарегистрировался</div>
+                        <tr>
+                            <th>{{ run.person.first_name }} {{ run.person.last_name }} {{ run.person.third_name }}</th>
+                            <th>{{ run.time }}</th>
+                            <th>{{ run.took_place }}</th>
+                        </tr>
                     {% endfor %}
-                </a>
+                </table>
+
             </div>
         </div>
 
@@ -62,3 +78,20 @@
 </article>
 </body>
 </html>
+
+<style>
+    body {
+        font: normal medium/1.4 sans-serif;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 40%;
+    }
+
+    th, td {
+        padding: 0.25rem;
+        text-align: left;
+        border: 1px solid #ccc;
+    }
+</style>
