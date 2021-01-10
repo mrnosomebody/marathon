@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     div {
         width: 10000px;
@@ -9,7 +10,22 @@
         margin: auto;
     }
 </style>
+<header>
+    <link rel="stylesheet" href="{% static 'race_creator/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'race_creator/ConstructMarathon.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
+    <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'marathon/nicepage.css' %}" media="screen">
+    <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
+</header>
 <body>
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ul>
+        <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+            style="display: inline; margin-right: 20px;"><a href="{% url 'first_page' %}">Home</a></li>
+    </ul>
+</nav>
 {% for event in events %}
     <article class="media content-section">
         <div class="media-body">
@@ -18,10 +34,12 @@
                     <h2><a class="mr-2" href="{% url 'm-event_detail' event.id %}"> {{ event.name }}</a></h2>
                     <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
                     <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
-                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance - {{ event.distance.distance }} km</li>
+                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance
+                        - {{ event.distance.distance }} km
+                    </li>
                 </ul>
             </div>
-                <h2><a class="article-title" href="{% url 'm-event_detail' event.id %}">{{ event.title }}</a></h2>
+            <h2><a class="article-title" href="{% url 'm-event_detail' event.id %}">{{ event.title }}</a></h2>
         </div>
     </article>
 {% endfor %}

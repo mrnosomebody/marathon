@@ -6,6 +6,7 @@ from marathon.models import *
 
 STATUS_CHOICES = [(1, 'Runner'), (2, 'Organizer'), (3, 'Coordinator')]
 SEX_CHOICES = [("Male", 'Male'), ("Female", 'Female')]
+DISTANCES = [(1, 5.0), (2, 10.0), (3, 21.1), (4, 42.2)]
 
 
 class Register_user(UserCreationForm):
@@ -27,7 +28,21 @@ class Register_user(UserCreationForm):
 
 
 class Register_sponsor(UserCreationForm):
-
     class Meta:
         model = Sponsor
         fields = ["username", "e_mail", "company", "phone_num"]
+
+
+class RaceCreator(ModelForm):
+    distance = forms.ChoiceField( widget=forms.Select, choices=DISTANCES, required=True, label="Distance")
+
+    class Meta:
+        model = Event
+        fields = ["name", "place", "date", "distance"]
+
+    def clean(self):
+        distance, created = Event.objects.get_or_create(
+            distance=self.cleaned_data['distance'])
+        self.cleaned_data['distance'] = distance.distance
+        return super(RaceCreator, self).clean()
+

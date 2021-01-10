@@ -10,6 +10,7 @@ urlpatterns = [
     path('event/', EventListView.as_view(), name='m-event'),
     path('event/<int:pk>/', EventDetailView.as_view(),  name='m-event_detail'),
     path('join/',register_run,name='join'),
-    path('race-creator/', race_creator, name='race-creator')
-
+    path('join-sponsor/',register_run_sponsor,name='join-sponsor'),
+    path('race-creator/', race_creator, name='race-creator'),
+    path('my-runs/', my_runs, name='my-runs')
 ]

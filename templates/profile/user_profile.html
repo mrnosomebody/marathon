@@ -1,8 +1,12 @@
 {% load static %}
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{#    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>#}
+{#    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
+     <link rel="stylesheet" href="{% static 'race_creator/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'race_creator/ConstructMarathon.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
     <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
     <link rel="stylesheet" href="{% static 'marathon/nicepage.css' %}" media="screen">
     <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
@@ -17,14 +21,15 @@
                 <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                     style="display: inline; margin-right: 20px;"><a href="{% url 'first_page' %}">Home</a></li>
                 <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-                    style="display: inline; margin-right: 20px;margin-top: 15px"><a href="#">My Runs</a></li>
-                <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-                    style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'race-creator' %}">Create
-                    a race</a></li>
+                    style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'my-runs' %}">My Runs</a></li>
+                {% if user.status_id.get.name == 'Organizer' %}
+                    <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                        style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'race-creator' %}">Create
+                        a race</a></li>
+                {% endif %}
                 <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                     style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'm-event' %}">All
                     races</a></li>
-
             </ul>
         </nav>
 

@@ -9,6 +9,11 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
+    <link rel="stylesheet" href="{% static 'race_creator/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'race_creator/ConstructMarathon.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'marathon/jquery.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'marathon/nicepage.js' %}" defer=""></script>
     <script type="text/javascript">
@@ -42,6 +47,18 @@
                 }
             });
         };
+
+        function sendUltraPost1(id) {
+            $.ajax({ // create an AJAX call...
+                data: {event: id},
+                type: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                url: '/join-sponsor/',
+                success: function (response) {
+                    $('#join').replaceWith("Succeed");
+                }
+            });
+        };
     </script>
 </head>
 <body>
@@ -54,12 +71,18 @@
         <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
             style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'm-event' %}">Back to races</a>
         </li>
-        {% if user.is_authenticated %}
-        <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-            style="display: inline; margin-right: 20px;margin-top: 15px"><a id='join'
-                                                                            onclick="sendUltraPost({{ object.id }})">Join</a>
-        {%endif%}
-        </li>
+
+        {% if user.is_authenticated and user.person.status is Runner or Coordinator or Organizer %}
+            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;margin-top: 15px"><a id='join' onclick="sendUltraPost({{ object.id }}); this.hide()">Join</a>
+            </li>
+        {% else %}
+            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;margin-top: 15px"><a id='join' onclick="sendUltraPost1({{ object.id }}); this.hide()">Sponsor this race</a>
+            </li>
+        {% endif %}
+
+
     </ul>
 </nav>
 
@@ -72,7 +95,7 @@
         </li>
     </ul>
 </div>
-</section>
+
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
@@ -80,15 +103,21 @@
                 <h2 style="margin-left: 790px;margin-bottom: -80px;font-family: 'Trocchi'">Participants list</h2>
                 <table>
                     <tr>
+                        <th>Username</th>
+                        <th>Status</th>
                         <th>Full name</th>
                         <th>Run time</th>
                         <th>Place</th>
+
                     </tr>
                     {% for run in object.run_set.all %}
                         <tr>
+                            <th>{{ run.person.username }}</th>
+                            <th>{{ run.person.status_id.get.name }}</th>
                             <th>{{ run.person.first_name }} {{ run.person.last_name }} {{ run.person.third_name }}</th>
                             <th>{{ run.time }}</th>
                             <th>{{ run.took_place }}</th>
+
                         </tr>
                     {% endfor %}
                 </table>

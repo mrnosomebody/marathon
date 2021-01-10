@@ -14,12 +14,7 @@ def first_page(request):
     sponsors = Sponsor.objects.all().count()
     participants = Person.objects.all().count()
     races = Event.objects.all().count()
-
     return render(request, 'first_page.html', {'sponsors': sponsors, 'participants': participants, 'races': races})
-
-
-def race_creator(request):
-    return render(request, 'race_creator/ConstructMarathon.html', {})
 
 
 @login_required(login_url=reverse_lazy('m-login'))
@@ -27,16 +22,26 @@ def register_run(request, *args, **kwargs):
     user = Person.objects.get(pk=request.user.id)
     event = Event.objects.get(pk=request.POST['event'])
     try:
-        a=Run.objects.get(person_id=user.id, event_id=event.id)
-
-        print(a)
-        if Run.objects.get(person_id=user.id, event_id=event.id) :
-            messages.error(request, message='You have already joined')
-            trc = True
+        if Run.objects.get(person_id=user.id, event_id=event.id):
+            messages.warning(request, ' gg ', fail_silently=False)
     except:
         run = Run(person=user, event=event)
         run.save()
     return HttpResponse()
+
+@login_required(login_url=reverse_lazy('m-login'))
+def register_run_sponsor(request, *args, **kwargs):
+    sponsor = Sponsor.objects.get(pk=request.user.id)
+    event = Event.objects.get(pk=request.POST['event'])
+    event.sponsor_set.add(sponsor)
+    return HttpResponse()
+
+
+def my_runs(request):
+    events = Event.objects.all()
+    runs = Run.objects.get_queryset()
+    print(events)
+    return render(request, 'profile/my_runs.html', {'events': events, 'runs': runs})
 
 
 def register_user(request):
@@ -67,14 +72,24 @@ def register_sponsor(request):
     return render(request, 'register/index.html', {'form': form})
 
 
-def join(request):
-    user = Person.objects.get()
-    print(user)
+def race_creator(request):
+    if request.method == 'POST':
+        form = RaceCreator(request.POST)
+        print(form.fields)
+        if form.is_valid():
+            a = form.save(commit=False)
+            a.save()
+            return redirect('m-event')
+        else:
+            messages.error(request, f'Error')
+    else:
+        form = RaceCreator()
+    return render(request, 'race_creator/ConstructMarathon.html', {'form': form})
 
 
 class LoginFormView(FormView):
     form_class = AuthenticationForm
-    success_url = '/profile'
+    success_url = '/'
     template_name = 'login/index.html'
 
     def form_valid(self, form):
@@ -92,3 +107,4 @@ class EventListView(ListView):
 class EventDetailView(DetailView):
     model = Event
     template_name = 'event/detail_view.html'
+
