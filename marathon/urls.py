@@ -12,5 +12,6 @@ urlpatterns = [
     path('join/',register_run,name='join'),
     path('join-sponsor/',register_run_sponsor,name='join-sponsor'),
     path('race-creator/', race_creator, name='race-creator'),
-    path('my-runs/', my_runs, name='my-runs')
+    path('my-runs/', my_runs, name='my-runs'),
+    path('user-editor/', user_update, name='m-profile-editor'),
 ]

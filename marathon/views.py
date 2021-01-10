@@ -43,6 +43,18 @@ def my_runs(request):
     print(events)
     return render(request, 'profile/my_runs.html', {'events': events, 'runs': runs})
 
+def user_update(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('m-profile')
+        else:
+            messages.error(request, f'Error')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'profile/edit_profile.html', {'form': form})
+
 
 def register_user(request):
     if request.method == 'POST':

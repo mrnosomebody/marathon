@@ -46,3 +46,7 @@ class RaceCreator(ModelForm):
         self.cleaned_data['distance'] = distance.distance
         return super(RaceCreator, self).clean()
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Person
+        fields = ['first_name', 'last_name', 'third_name', 'email', 'phone_num']
