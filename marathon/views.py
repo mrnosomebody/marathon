@@ -29,6 +29,7 @@ def register_run(request, *args, **kwargs):
         run.save()
     return HttpResponse()
 
+
 @login_required(login_url=reverse_lazy('m-login'))
 def register_run_sponsor(request, *args, **kwargs):
     sponsor = Sponsor.objects.get(pk=request.user.id)
@@ -42,6 +43,7 @@ def my_runs(request):
     runs = Run.objects.get_queryset()
     print(events)
     return render(request, 'profile/my_runs.html', {'events': events, 'runs': runs})
+
 
 def user_update(request):
     if request.method == 'POST':
@@ -119,4 +121,3 @@ class EventListView(ListView):
 class EventDetailView(DetailView):
     model = Event
     template_name = 'event/detail_view.html'
-

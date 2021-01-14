@@ -44,24 +44,25 @@
        class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-1">Show
         all runs</a>
     {% if user.is_authenticated %}
-    <a href="{% url 'm-logout' %}"
-       class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
-        Out</a>
-    {%else %}
-    <a href="{% url 'm-login' %}"
-       class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
-        in</a>
+        <a href="{% url 'm-logout' %}"
+           class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
+            Out</a>
+        {% if user.person.status is Runner or Organizer or Coordinator %}
+        <a href="{% url 'm-profile' %}"
+           class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2"
+           style="margin-right: 300px">Profile</a>
+        {% else %}
+            <a href="{% url 'm-sponsor-profile' %}"
+               class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2"
+               style="margin-right: 300px">Profile</a>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'm-login' %}"
+           class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2">Log
+            in</a>
     {% endif %}
 
-    {% if user.person.status is Runner or Organizer or Coordinator %}
-    <a href="{% url 'm-profile' %}"
-       class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2"
-       style="margin-right: 300px">Profile</a>
-    {% else %}
-        <a href="{% url 'm-sponsor-profile' %}"
-       class="u-border-2 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-2"
-       style="margin-right: 300px">Profile</a>
-    {% endif %}
+
     <div class="u-align-center u-custom-font u-font-oswald u-text u-text-1">
         <div class="u-text-body-alt-color">
             <span class="clip-text" style="font-size: 3.75rem;">Marathon Skills </span>
@@ -86,21 +87,24 @@
             <div class="u-align-center u-container-style u-list-item u-repeater-item u-video-cover u-list-item-1">
                 <div class="u-container-layout u-similar-container u-container-layout-2">
                     <h1 class="u-text u-text-default u-title u-text-2" data-animation-name="counter"
-                        data-animation-event="scroll" data-animation-duration="3000" style="margin-left: 150px">{{ sponsors }}</h1>
+                        data-animation-event="scroll" data-animation-duration="3000"
+                        style="margin-left: 150px">{{ sponsors }}</h1>
                     <h4 class="u-text u-text-3">Sponsors</h4>
                 </div>
             </div>
             <div class="u-align-center u-container-style u-list-item u-repeater-item u-video-cover u-list-item-2">
                 <div class="u-container-layout u-similar-container u-container-layout-3">
                     <h1 class="u-text u-text-default u-title u-text-4" data-animation-name="counter"
-                        data-animation-event="scroll" data-animation-duration="3000" style="margin-left: 150px">{{ participants }}</h1>
+                        data-animation-event="scroll" data-animation-duration="3000"
+                        style="margin-left: 150px">{{ participants }}</h1>
                     <h4 class="u-text u-text-5">Participants</h4>
                 </div>
             </div>
             <div class="u-align-center u-container-style u-list-item u-repeater-item u-video-cover u-list-item-3">
                 <div class="u-container-layout u-similar-container u-container-layout-4">
                     <h1 class="u-text u-text-default u-title u-text-6" data-animation-name="counter"
-                        data-animation-event="scroll" data-animation-duration="3000" style="margin-left: 150px">{{ races }}</h1>
+                        data-animation-event="scroll" data-animation-duration="3000"
+                        style="margin-left: 150px">{{ races }}</h1>
                     <h4 class="u-text u-text-7">Races</h4>
                 </div>
             </div>
@@ -128,7 +132,8 @@
                     <h3 class="u-align-center u-custom-font u-font-courier-new u-text u-text-body-alt-color u-text-2">
                         Race Creator</h3>
                     <h3 class="u-align-left u-custom-font u-font-montserrat u-text u-text-body-alt-color u-text-3">You
-                        can simply create a race, that will take place whenever and wherever you want.<br>Choose distance, city and time
+                        can simply create a race, that will take place whenever and wherever you want.<br>Choose
+                        distance, city and time
                     </h3>
                 </div>
             </div>
@@ -215,8 +220,7 @@
 
         -webkit-background-clip: text;
         color: transparent;
-    / / set to transparent, otherwise won 't see the background width: 300 px;
-        height: 100px;
+    / / set to transparent, otherwise won 't see the background width: 300 px; height: 100 px;
         box-sizing: border-box;
         font-size: 58px;
         font-weight: bold;

@@ -1,29 +1,86 @@
-<!doctype html>
-<html lang="en">
+{% load static %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile Edit</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.." rel="stylesheet" id="bootstrap-css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static 'race_creator/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'race_creator/ConstructMarathon.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
+    <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'marathon/nicepage.css' %}" media="screen">
+    <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
 </head>
-<body>
-<form method="Post">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="fieldWrapper">
-            {{ fields.errors }}
-            <label>
-                {{ field.label_tag }}
-            </label>
-            <div class="input--style-4">
-                {{ field }}
+
+<body class="u-expanded-width u-image u-image-default u-image-1" style="background-image: url({% static 'marathon/images/-min1.jpg' %})">
+<div class="container">
+
+    <div class="main-body">
+        <nav aria-label="breadcrumb" class="row gutters-sm">
+            <ul>
+                <a href="{% url 'first_page' %}"
+                   class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                   style="display: inline; margin-right: 20px;margin-top: 15px">Home</a>
+                <a href="{% url 'my-runs' %}"
+                   class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                   style="display: inline; margin-right: 20px;margin-top: 15px">My Runs</a>
+                {% if user.status_id.get.name == 'Organizer' %}
+                    <a href="{% url 'race-creator' %}"
+                       class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                       style="display: inline; margin-right: 20px;margin-top: 15px">Create a race</a>
+                {% endif %}
+                <<a href="{% url 'm-event' %}"
+                    class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                    style="display: inline; margin-right: 500px;margin-top: 15px">All races</a>
+                <a href="{% url 'm-logout' %}"
+                   class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                   style="display: inline; margin-right: 20px;margin-top: 15px">Log Out</a>
+            </ul>
+        </nav>
+
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
+                                 class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>{{ user.username }}</h4>
+                                <p class="text-secondary mb-1">{{ user.status_id.get.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'm-profile' %}"
+                   class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                   style="margin-left: 125px">Cancel</a>
+
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <form method="Post">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                    <div class="fieldWrapper" style="display: inline;margin-top: 15px">
+                                        {{ fields.errors }}
+                                        <label>{{ field.label_tag }}</label>
+                                        {{ field }}
+                                        <br>
+                                    </div>
+                                {% endfor %}
+                                <div class="p-t-15">
+                                    <button type="submit"
+                                       class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                                    >Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endfor %}
-    <div class="p-t-15">
-        <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
     </div>
-</form>
+</div>
 </body>
-</html>

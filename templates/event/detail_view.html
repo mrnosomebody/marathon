@@ -33,9 +33,7 @@
             }
             return cookieValue;
         }
-
         const csrftoken = getCookie('csrftoken');
-
         function sendUltraPost(id) {
             $.ajax({ // create an AJAX call...
                 data: {event: id},
@@ -61,71 +59,64 @@
         };
     </script>
 </head>
-<body>
-<nav aria-label="breadcrumb" class="main-breadcrumb">
+<body class="u-expanded-width u-image u-image-default u-image-1" style="background-image: url({% static 'marathon/images/-min1.jpg' %});">
 
-    <ul>
-        <h2 class=" ">{{ object.name }} Race</h2>
-        <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-            style="display: inline; margin-right: 20px;"><a href="{% url 'first_page' %}">Home</a></li>
-        <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-            style="display: inline; margin-right: 20px;margin-top: 15px"><a href="{% url 'm-event' %}">Back to races</a>
-        </li>
+    <nav aria-label="breadcrumb" class="main-breadcrumb" style="color: whitesmoke">
+        <ul>
+            <a href="{% url 'first_page' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;">Home</a>
+            <a href="{% url 'm-event' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;">Back to races</a>
+            {% if user.is_authenticated and user.person.status is Runner or Coordinator or Organizer %}
+                <a class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                    style="display: inline; margin-right: 20px;margin-top: 15px" id='join' onclick="sendUltraPost({{ object.id }}); this.hide()">Join</a>
+            {% elif user.is_authenticated %}
+                <a class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                    style="display: inline; margin-right: 20px;margin-top: 15px" id='join' onclick="sendUltraPost1({{ object.id }}); this.hide()">Sponsor this race</a>
+            {% endif %}
+        <h2 style="color: whitesmoke">{{ object.name }} Race</h2>
+        </ul>
+    </nav>
 
-        {% if user.is_authenticated and user.person.status is Runner or Coordinator or Organizer %}
-            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-                style="display: inline; margin-right: 20px;margin-top: 15px"><a id='join' onclick="sendUltraPost({{ object.id }}); this.hide()">Join</a>
+    <div class="center" style="color: whitesmoke">
+        <ul>
+            <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
+            <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
+            <li style="display: inline; margin-right: 60px;font-size: 27px">Distance
+                - {{ event.distance.distance }} km
             </li>
-        {% else %}
-            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-                style="display: inline; margin-right: 20px;margin-top: 15px"><a id='join' onclick="sendUltraPost1({{ object.id }}); this.hide()">Sponsor this race</a>
-            </li>
-        {% endif %}
+        </ul>
+    </div>
 
-
-    </ul>
-</nav>
-
-<div class="center">
-    <ul>
-        <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
-        <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
-        <li style="display: inline; margin-right: 60px;font-size: 27px">Distance
-            - {{ event.distance.distance }} km
-        </li>
-    </ul>
-</div>
-
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <div>
-                <h2 style="margin-left: 790px;margin-bottom: -80px;font-family: 'Trocchi'">Participants list</h2>
-                <table>
-                    <tr>
-                        <th>Username</th>
-                        <th>Status</th>
-                        <th>Full name</th>
-                        <th>Run time</th>
-                        <th>Place</th>
-
-                    </tr>
-                    {% for run in object.run_set.all %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div>
+                    <h2 style="margin-left: 790px;margin-bottom: -80px;font-family: 'Trocchi';color: whitesmoke" >Participants list</h2>
+                    <table>
                         <tr>
-                            <th>{{ run.person.username }}</th>
-                            <th>{{ run.person.status_id.get.name }}</th>
-                            <th>{{ run.person.first_name }} {{ run.person.last_name }} {{ run.person.third_name }}</th>
-                            <th>{{ run.time }}</th>
-                            <th>{{ run.took_place }}</th>
+                            <th>Username</th>
+                            <th>Status</th>
+                            <th>Full name</th>
+                            <th>Run time</th>
+                            <th>Place</th>
 
                         </tr>
-                    {% endfor %}
-                </table>
+                        {% for run in object.run_set.all %}
+                            <tr>
+                                <th>{{ run.person.username }}</th>
+                                <th>{{ run.person.status_id.get.name }}</th>
+                                <th>{{ run.person.first_name }} {{ run.person.last_name }} {{ run.person.third_name }}</th>
+                                <th>{{ run.time }}</th>
+                                <th>{{ run.took_place }}</th>
+                            </tr>
+                        {% endfor %}
+                    </table>
 
+                </div>
             </div>
         </div>
-    </div>
-</article>
+    </article>
 </body>
 </html>
 

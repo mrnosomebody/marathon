@@ -47,5 +47,3 @@ class Run(models.Model):
 
     def __str__(self):
         return self.event.name + ' - ' + self.person.username
-
-

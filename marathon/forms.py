@@ -34,7 +34,7 @@ class Register_sponsor(UserCreationForm):
 
 
 class RaceCreator(ModelForm):
-    distance = forms.ChoiceField( widget=forms.Select, choices=DISTANCES, required=True, label="Distance")
+    distance = forms.ChoiceField(widget=forms.Select, choices=DISTANCES, required=True, label="Distance")
 
     class Meta:
         model = Event
@@ -46,7 +46,9 @@ class RaceCreator(ModelForm):
         self.cleaned_data['distance'] = distance.distance
         return super(RaceCreator, self).clean()
 
+
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ['first_name', 'last_name', 'third_name', 'email', 'phone_num']
+
