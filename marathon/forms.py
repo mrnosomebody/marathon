@@ -40,11 +40,10 @@ class RaceCreator(ModelForm):
         model = Event
         fields = ["name", "place", "date", "distance"]
 
-    def clean(self):
-        distance, created = Event.objects.get_or_create(
-            distance=self.cleaned_data['distance'])
-        self.cleaned_data['distance'] = distance.distance
-        return super(RaceCreator, self).clean()
+    def clean_distance(self):
+        distance_id = int(self.cleaned_data['distance'])
+        distance = Distance.objects.get(id=distance_id)
+        return distance
 
 
 class UserUpdateForm(forms.ModelForm):

@@ -89,9 +89,9 @@ def register_sponsor(request):
 def race_creator(request):
     if request.method == 'POST':
         form = RaceCreator(request.POST)
-        print(form.fields)
         if form.is_valid():
             a = form.save(commit=False)
+
             a.save()
             return redirect('m-event')
         else:
