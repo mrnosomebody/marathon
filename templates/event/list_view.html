@@ -16,32 +16,49 @@
     <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
     <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
     <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.." rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="{% static 'marathon/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'info/list.css' %}" media="screen">
     <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
 </header>
-<body>
+<body background="{% static 'marathon/images/-min1.jpg' %}" class="u-expanded-width u-image u-image-default u-image-1">
+
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ul>
-        <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
-            style="display: inline; margin-right: 20px;"><a href="{% url 'first_page' %}">Home</a></li>
+        <a href="{% url 'first_page' %}">
+            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;">Home
+            </li>
+        </a>
     </ul>
 </nav>
-{% for event in events %}
-    <article class="media content-section">
-        <div class="media-body">
-            <div class="center">
-                <ul>
-                    <h2><a class="mr-2" href="{% url 'm-event_detail' event.id %}"> {{ event.name }}</a></h2>
-                    <li style="display: inline; margin-right: 60px;font-size: 27px">Place - {{ event.place }}</li>
-                    <li style="display: inline; margin-right: 60px;font-size: 27px">Date - {{ event.date }}</li>
-                    <li style="display: inline; margin-right: 60px;font-size: 27px">Distance
-                        - {{ event.distance.distance }} km
-                    </li>
-                </ul>
-            </div>
-            <h2><a class="article-title" href="{% url 'm-event_detail' event.id %}">{{ event.title }}</a></h2>
-        </div>
-    </article>
-{% endfor %}
-</body>
+<ul style="width: 108%">
+    {% for event in events %}
 
+        <li class="block-style">
+            <a style="display:block; text-align: center; color: black; text-decoration: none"
+               href="{% url 'm-event_detail' event.id %}">
+                <div class="div-border">
+                    <h2 style="font-size: 50px; font-family: Georgia, serif"> {{ event.name }}</h2>
+
+                    <div class="div-style">
+                        <p>
+                            <x style="color: #bababa">PLACE:</x>
+                            <x style="text-decoration: underline">{{ event.place }}</x>
+                        </p>
+                        <p>
+                            <x style="color: #bababa">DATE:</x>
+                            <x style="text-decoration: underline"> {{ event.date }}</x>
+                        </p>
+                        <p>
+                            <x style="color: #bababa">DISTANCE:</x>
+                            <x style="text-decoration: underline"> {{ event.distance.distance }} km</x>
+                        </p>
+                    </div>
+                </div>
+            </a>
+
+        </li>
+    {% endfor %}
+</ul>
+</body>

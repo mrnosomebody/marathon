@@ -1,13 +1,11 @@
 import math
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from marathon.models import *
 
-
-@login_required(login_url=reverse_lazy('m-login'))
-def profile(request):
-    user = Person.objects.get(username=request.user.username)
+def profile(request,username):
+    user = get_object_or_404(Person, username=username)
     ex = 0.0
     r_count = Run.objects.filter(person=user).count()
     for i in range(0, r_count):
@@ -27,8 +25,7 @@ def profile(request):
                                                          'pg_experience': pg_experience, 'left': left, 'right': right})
 
 
-@login_required(login_url=reverse_lazy('m-login'))
-def sponsor_profile(request):
-    user = Sponsor.objects.get(username=request.user.username)
+def sponsor_profile(request,username):
+    user = get_object_or_404(Sponsor, username=username)
     print(user.email)
     return render(request, 'profile/sponsor_profile.html', {'user': user})

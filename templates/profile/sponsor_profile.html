@@ -17,12 +17,16 @@
             <ul>
                 <a href="{% url 'first_page' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                         style="display: inline; margin-right: 20px;margin-top: 15px">Home</a>
-               <a href="#" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                {% if user.username == request.user.username %}
+               <a href="{% url 'm-event_sponsored' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                         style="display: inline; margin-right: 20px;margin-top: 15px">My Sponsored Runs</a>
+                {% endif %}
                 <a href="{% url 'm-event' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                         style="display: inline; margin-right: 411px;margin-top: 15px">All races</a>
+            {% if user.username == request.user.username %}
                 <a href="{% url 'm-logout' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                         style="display: inline; margin-right: 20px;margin-top: 15px">Log Out</a>
+            {% endif %}
             </ul>
         </nav>
 

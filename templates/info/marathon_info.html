@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<header>
+    <link rel="stylesheet" href="{% static 'race_creator/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'race_creator/ConstructMarathon.css' %}" media="screen">
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/jquery.js' %}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{% static 'race_creator/nicepage.js' %}" defer=""></script>
+    <link rel="stylesheet" href="{% static 'marathon/first_page.css' %}" media="screen">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.." rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static 'marathon/nicepage.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'info/list.css' %}" media="screen">
+    <link rel="icon" type="image/png" href="{% static 'marathon/images/Screenshot_1.png' %}"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>MS info</title>
+</header>
+<body class="u-expanded-width u-image u-image-default u-image-1"
+      style="background-image: url({% static 'marathon/images/-min1.jpg' %});">
+
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+    <ul>
+        <a href="{% url 'first_page' %}">
+            <li class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
+                style="display: inline; margin-right: 20px;">Home
+            </li>
+        </a>
+    </ul>
+</nav>
+
+<div class="main-text">
+    <h1> MarathonSkills INFO</h1>
+</div>
+
+
+<div style="width: 100%; border: none; background: none; outline: none">
+    <hr color="black" style="width: 78%; align-self: center; height: 1px">
+    <h3 style="text-align: center; color: white; font-family: Georgia, serif">Results of past races</h3>
+    <table class="table-style" border="1" cellpadding="5">
+        <tr>
+            <th>Run name</th>
+            <th>Place</th>
+            <th>Date, Time</th>
+            <th>Distance</th>
+            <th>Participants</th>
+        </tr>
+        {% for event in events %}
+            <tr>
+                <td><a style="display:block; text-align: center; color: white; text-decoration: none"
+                       href="{% url 'm-event_detail' event.id %}">{{ event.name }}</a></td>
+                <td>{{ event.place }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.distance }} km</td>
+                <td>{{ event.participants }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<br>
+
+
+<h3 style="text-align: center; color: white; font-family: Georgia, serif">Our Sponsors</h3>
+<div style="width: 100%; border: none; background: none; outline: none">
+    <table class="table-style" border="1" cellpadding="5">
+        <tr>
+            <th>Username</th>
+            <th>Company</th>
+            <th>email</th>
+            <th>Phone number</th>
+            <th>Sponsored Races</th>
+        </tr>
+        {% for sponsor in sponsors %}
+            <tr>
+                <td><a style="display:block; text-align: center; color: white; text-decoration: none"
+                       href="{% url 'm-sponsor-profile' sponsor.username %}">{{ sponsor.username }}</a></td>
+                <td>{{ sponsor.company }}</td>
+                <td>{{ sponsor.e_mail }}</td>
+                <td>{{ sponsor.phone_num }}</td>
+                <td>
+                    {% for e_id in sponsor.event_id.all %}
+                        <a style="display:block; text-align: center; color: white; text-decoration: none"
+                           href="{% url 'm-event_detail' e_id.id %}">{{ e_id.name }}</a>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+
+<h3 style="text-align: center; color: white; font-family: Georgia, serif">Best Runners</h3>
+<div style="width: 100%; border: none; background: none; outline: none">
+    <table class="table-style" border="1" cellpadding="5">
+        <tr>
+            <th>Place</th>
+            <th>LVL</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Phone number</th>
+        </tr>
+        {% for runner in runners %}
+            <tr>
+                {% if runner.place < 4 %}
+                    <td style="text-align: center; color: white; background-color: rgba(100, 256, 100, 0.6)">{{ runner.place }}</td>
+                {% elif runner.place < 11 %}
+                    <td style="text-align: center; color: white; background-color: rgba(100, 256, 256, 0.6)">{{ runner.place }}</td>
+                {% else %}
+                    <td style="text-align: center; color: white; background-color: rgba(256, 100, 100, 0.6)">{{ runner.place }}</td>
+                {% endif %}
+                <td style="text-align: center; color: #3be8e0">{{ runner.level }}</td>
+                <td><a style="display:block; text-align: center; color: white; text-decoration: none"
+                       href="{% url 'm-profile' runner.pers.username %}">{{ runner.pers.username }}</a></td>
+                <td>{{ runner.pers.first_name }}</td>
+                <td>{{ runner.pers.phone_num }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+</html>
+<style>
+    .table-style {
+        border-collapse: collapse;
+        border: 2px solid rgba(50, 50, 50, 1);
+        width: 100%;
+        position: relative;
+        font-size: 24px;
+        background-color: rgba(10, 10, 10, 0.8);
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .table-style th {
+        color: #3be8e0;
+        text-align: center;
+        width: auto;
+    }
+
+    .table-style td {
+        color: white;
+        height: 50px;
+
+    }
+
+    .main-text {
+        text-align: center;
+
+        border: none;
+        background: none;
+        outline: none;
+        width: 100%;
+        color: white;
+        font-family: Georgia, serif;
+    }
+
+</style>

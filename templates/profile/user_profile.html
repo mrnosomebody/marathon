@@ -20,20 +20,26 @@
                 <a href="{% url 'first_page' %}"
                    class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                    style="display: inline; margin-right: 20px;margin-top: 15px">Home</a>
+             {% if user.username == request.user.username %}
                 <a href="{% url 'my-runs' %}"
                    class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                    style="display: inline; margin-right: 20px;margin-top: 15px">My Runs</a>
+            {% endif %}
+            {% if user.username == request.user.username %}
                 {% if user.status_id.get.name == 'Organizer' %}
                     <a href="{% url 'race-creator' %}"
                        class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                        style="display: inline; margin-right: 20px;margin-top: 15px">Create a race</a>
                 {% endif %}
+            {% endif %}
                 <<a href="{% url 'm-event' %}"
                     class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                     style="display: inline; margin-right: 20px;margin-top: 15px">All races</a>
+            {% if user.username == request.user.username %}
                 <a href="{% url 'm-logout' %}"
                    class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                    style="display: inline; margin-right: 20px;margin-top: 15px">Log Out</a>
+            {% endif %}
             </ul>
         </nav>
 
@@ -52,9 +58,11 @@
                         </div>
                     </div>
                 </div>
+                {% if user.username == request.user.username %}
                 <a href="{% url 'm-profile-editor' %}"
                    class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                    style="margin-left: 125px">Edit</a>
+                {% endif %}
             </div>
             <div class="col-md-8">
                 <div class="card mb-3">

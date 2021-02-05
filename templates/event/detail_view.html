@@ -67,10 +67,10 @@
                 style="display: inline; margin-right: 20px;">Home</a>
             <a href="{% url 'm-event' %}" class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                 style="display: inline; margin-right: 20px;">Back to races</a>
-            {% if user.is_authenticated and user.person.status is Runner or Coordinator or Organizer %}
+            {% if user.is_authenticated and request.user not in object.run_set.all and user.person.status is Runner or Coordinator or Organizer %}
                 <a class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                     style="display: inline; margin-right: 20px;margin-top: 15px" id='join' onclick="sendUltraPost({{ object.id }}); this.hide()">Join</a>
-            {% elif user.is_authenticated %}
+            {% elif user.is_authenticated and user.person.status is not Runner or Coordinator or Organizer%}
                 <a class="u-border-4 u-border-palette-4-base u-btn u-btn-round u-button-style u-custom-font u-font-courier-new u-none u-radius-25 u-text-body-alt-color u-text-hover-white u-btn-3"
                     style="display: inline; margin-right: 20px;margin-top: 15px" id='join' onclick="sendUltraPost1({{ object.id }}); this.hide()">Sponsor this race</a>
             {% endif %}
@@ -104,15 +104,14 @@
                         </tr>
                         {% for run in object.run_set.all %}
                             <tr>
-                                <th>{{ run.person.username }}</th>
+                                <th><a href="{% url 'm-profile' run.person.username %}"> {{ run.person.username }}</a></th>
                                 <th>{{ run.person.status_id.get.name }}</th>
                                 <th>{{ run.person.first_name }} {{ run.person.last_name }} {{ run.person.third_name }}</th>
-                                <th>{{ run.time }}</th>
+                                <th>{{ run.time }} min</th>
                                 <th>{{ run.took_place }}</th>
                             </tr>
                         {% endfor %}
                     </table>
-
                 </div>
             </div>
         </div>
